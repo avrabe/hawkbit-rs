@@ -61,7 +61,7 @@ struct Deployment {
 }
 
 /// How the download or update should be processed by the target.
-#[derive(Debug, Deserialize, Serialize, Copy, Clone, PartialEq)]
+#[derive(Debug, Deserialize, Serialize, Copy, Clone, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum Type {
     /// Do not process yet
@@ -73,7 +73,7 @@ pub enum Type {
 }
 
 /// Separation of download and installation by defining a maintenance window for the installation.
-#[derive(Debug, Deserialize, Serialize, Copy, Clone, PartialEq)]
+#[derive(Debug, Deserialize, Serialize, Copy, Clone, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum MaintenanceWindow {
     /// Maintenance window is available
@@ -396,7 +396,7 @@ impl<'a> Artifact<'a> {
             .links
             .https
             .as_ref()
-            .or_else(|| self.artifact.links.http.as_ref())
+            .or(self.artifact.links.http.as_ref())
             .expect("Missing content link in for artifact");
 
         let resp = self
@@ -648,7 +648,7 @@ cfg_if::cfg_if! {
     }
 }
 
-impl<'a> DownloadedArtifact {
+impl DownloadedArtifact {
     fn new(file: PathBuf, hashes: Hashes) -> Self {
         Self { file, hashes }
     }
