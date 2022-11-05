@@ -48,6 +48,7 @@ struct Reply {
     id: String,
     deployment: Deployment,
     #[serde(rename = "actionHistory")]
+    #[allow(dead_code)]
     action_history: Option<ActionHistory>,
 }
 
@@ -192,6 +193,7 @@ impl<'de> Deserialize<'de> for Links {
 #[derive(Debug)]
 struct Download {
     content: Link,
+    #[allow(dead_code)]
     md5sum: Option<Link>,
 }
 
@@ -205,8 +207,10 @@ struct Links {
 
 #[derive(Debug, Deserialize)]
 struct ActionHistory {
+    #[allow(dead_code)]
     status: String,
     #[serde(default)]
+    #[allow(dead_code)]
     messages: Vec<String>,
 }
 
