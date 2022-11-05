@@ -110,8 +110,11 @@ struct ArtifactInternal {
 
 #[derive(Debug, Deserialize, Clone)]
 struct Hashes {
+    #[cfg(feature = "hash-sha1")]
     sha1: String,
+    #[cfg(feature = "hash-md5")]
     md5: String,
+    #[cfg(feature = "hash-sha256")]
     sha256: String,
 }
 
@@ -510,6 +513,7 @@ impl<'a> Artifact<'a> {
 #[derive(Debug)]
 pub struct DownloadedArtifact {
     file: PathBuf,
+    #[allow(dead_code)]
     hashes: Hashes,
 }
 
